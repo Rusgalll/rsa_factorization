@@ -116,91 +116,87 @@ def insert_text():
     number = variant_text.get("1.0", 'end-1c')
     if not number.isdigit():
         return n_text.insert(END, "Введен некорректный символ")
-    if int(number) > 75 or int(number) < 1:
+    if int(number) > 75:
         return n_text.insert(END, "Такого варианта нет")
     doc = docx.Document('Labs_IBKS_2018_1.docx')
     text = []
     d = {}
     for paragraph in doc.paragraphs:
         text.append(paragraph.text)
-    text_1 = '\n'.join(text)[21231:30067].strip()
-    a = text_1.split('\n')
-    print(text_1)
-    for i in range(1, len(a), 2):
-        d[a[i - 1]] = a[i]
+    text = '\n'.join(text)[21231:30067].strip().split('\n')
+    for i in range(1, len(text), 2):
+        d[text[i - 1]] = text[i]
 
-    print(a)
-    print(d)
-    dy = {}
     for k, v in d.items():
-        arr = []
+        result_list = []
         k = k.replace('Вариант ', '').strip()
-        v = v.strip().split(',')
-        for i in v:
-            i = i.strip()
-            i = i.replace('n=', '')
-            i = i.replace('e=', '')
-            i = i.replace('SW=', '')
-
-            arr.append(i)
-        dy[k] = arr
         if number == k:
-            n_text.insert(END, arr[0])
-            e_text.insert(END, arr[1])
-            sw_text.insert(END, arr[2])
+            v = v.strip().split(',')
+            for i in v:
+                i = i.strip()
+                i = i.replace('n=', '')
+                i = i.replace('e=', '')
+                i = i.replace('SW=', '')
+                result_list.append(i)
+            n_text.insert(END, result_list[0])
+            e_text.insert(END, result_list[1])
+            sw_text.insert(END, result_list[2])
+            break
 
 
 window = Tk()
 
 window.title("factorization of the RSA key")
 window.geometry("1920x1080")
+window.configure(bg='black')
 
-heading = Label(window, text="factorization of the RSA key", font=("Terminal", 35))
+heading = Label(window, text="factorization of the RSA key", font=("Terminal", 35), bg='black', fg='white')
 heading.pack(expand=False, fill=NONE)
 
-n_ui = Label(window, text="n:", font=("Terminal", 25))
+n_ui = Label(window, text="n:", font=("Terminal", 25), bg='black', fg='white')
 n_ui.place(x=10, y=100, height=80, width=40)
-n_text = scrolledtext.ScrolledText(window, width=40, height=10)
+n_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 n_text.place(x=70, y=110, height=60, width=300)
 hack_btn = Button(window, text="Hack", font=("Arial Bold", 15), bg="black", fg="white", command=test_factor_rho)
 hack_btn.place(x=210, y=200, anchor="center", height=30, width=180, bordermode=OUTSIDE)
-p_ui = Label(window, text="p:", font=("Terminal", 25))
+p_ui = Label(window, text="p:", font=("Terminal", 25), bg='black', fg='white')
 p_ui.place(x=10, y=240, height=80, width=40)
-p_text = scrolledtext.ScrolledText(window, width=40, height=10)
+p_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 p_text.place(x=70, y=250, height=60, width=300)
-q_ui = Label(window, text="q:", font=("Terminal", 25))
+q_ui = Label(window, text="q:", font=("Terminal", 25), bg='black', fg='white')
 q_ui.place(x=10, y=330, height=80, width=40)
-q_text = scrolledtext.ScrolledText(window, width=40, height=10)
+q_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 q_text.place(x=70, y=340, height=60, width=300)
-e = Label(window, text="e:", font=("Terminal", 25))
-e.place(x=500, y=100, height=80, width=40)
-e_text = scrolledtext.ScrolledText(window, width=40, height=10)
+e_ui = Label(window, text="e:", font=("Terminal", 25), bg='black', fg='white')
+e_ui.place(x=500, y=100, height=80, width=40)
+e_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 e_text.place(x=560, y=110, height=60, width=300)
-sw_ui = Label(window, text="sw:", font=("Terminal", 25))
+sw_ui = Label(window, text="sw:", font=("Terminal", 25), bg='black', fg='white')
 sw_ui.place(x=500, y=190, height=80, width=55)
-sw_text = scrolledtext.ScrolledText(window, width=40, height=10)
+sw_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 sw_text.place(x=560, y=200, height=60, width=300)
 decode_btn = Button(window, text="Decode the message", font=("Arial Bold", 15), bg="black", fg="white", command=decode)
 decode_btn.place(x=700, y=290, anchor="center", height=30, width=200, bordermode=OUTSIDE)
-fn_ui = Label(window, text="φ(n):", font=("Arial Bold", 18))
+fn_ui = Label(window, text="φ(n):", font=("Arial Bold", 18), bg='black', fg='white')
 fn_ui.place(x=500, y=330, height=80, width=55)
-fn_text = scrolledtext.ScrolledText(window, width=40, height=10)
+fn_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 fn_text.place(x=560, y=340, height=60, width=300)
-d_ui = Label(window, text="d:", font=("Terminal", 25))
+d_ui = Label(window, text="d:", font=("Terminal", 25), bg='black', fg='white')
 d_ui.place(x=500, y=420, height=80, width=55)
-d_text = scrolledtext.ScrolledText(window, width=40, height=10)
+d_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 d_text.place(x=560, y=430, height=60, width=300)
-result_ui = Label(window, text="Result:", font=("Terminal", 23))
+result_ui = Label(window, text="Result:", font=("Terminal", 23), bg='black', fg='white')
 result_ui.place(x=630, y=500, height=30, width=140)
-result_int_text = scrolledtext.ScrolledText(window, width=40, height=10)
+result_int_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 result_int_text.place(x=560, y=550, height=60, width=300)
-result_alphabet_text = scrolledtext.ScrolledText(window, width=40, height=10)
+result_alphabet_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black',
+                                                 font=("Terminal", 5))
 result_alphabet_text.place(x=560, y=640, height=60, width=300)
-
-variant = Label(window, text="Вариант:", font=("Aria Bold", 12))
-variant.place(x=10, y=10, height=80, width=65)
-variant_text = scrolledtext.ScrolledText(window, width=40, height=10)
-variant_text.place(x=90, y=30, height=40, width=120)
+variant = Label(window, text="Variant:", font=("Terminal", 12), bg='black', fg='white')
+variant.place(x=10, y=10, height=80, width=80)
+variant_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
+variant_text.place(x=100, y=30, height=40, width=120)
 insert_btn = Button(window, text="Insert", font=("Arial Bold", 15), bg="black", fg="white", command=insert_text)
 insert_btn.place(x=280, y=50, anchor="center", height=30, width=100, bordermode=OUTSIDE)
+
 window.mainloop()
