@@ -219,3 +219,4 @@ result_alphabet_text = scrolledtext.ScrolledText(window, width=40, height=10, bg
 result_alphabet_text.place(x=560, y=640, height=60, width=335)
 
 window.mainloop()
+
