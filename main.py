@@ -59,7 +59,7 @@ def test_factor_rho():
     n = n_text.get("1.0", 'end-1c')
     if not n.isdigit() or int(n) == 1:
         return p_text.insert(END, "Введен некорректный символ")
-    
+
     x_1 = 150
     p = factor_rho(int(n), x_1)
     print("p =", p)
@@ -145,8 +145,8 @@ def insert_text():
     for k, v in d.items():
         k = k.replace('Вариант ', '').strip()
         if number == k:
-            v = v.strip().split(',')
             result_list = []
+            v = v.strip().split(',')
             for i in v:
                 i = i.strip()
                 i = i.replace('n=', '')
@@ -219,3 +219,4 @@ result_alphabet_text = scrolledtext.ScrolledText(window, width=40, height=10, bg
 result_alphabet_text.place(x=560, y=640, height=60, width=335)
 
 window.mainloop()
+
