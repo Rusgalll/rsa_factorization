@@ -59,6 +59,7 @@ def test_factor_rho():
     n = n_text.get("1.0", 'end-1c')
     if not n.isdigit() or int(n) == 1:
         return p_text.insert(END, "Введен некорректный символ")
+    
     x_1 = 150
     p = factor_rho(int(n), x_1)
     print("p =", p)
@@ -73,29 +74,34 @@ def decode():
     d_text.delete('1.0', END)
     result_int_text.delete('1.0', END)
     result_alphabet_text.delete('1.0', END)
-
     e = e_text.get("1.0", 'end-1c')
     sw = sw_text.get("1.0", 'end-1c')
     n = int(n_text.get("1.0", 'end-1c'))
     p = int(p_text.get("1.0", 'end-1c'))
     q = int(q_text.get("1.0", 'end-1c'))
+
     if not e.isdigit() or not sw.isdigit():
         return result_alphabet_text.insert(END, "Введен некорректный символ")
+
     message = ''
     dictionary = {}
     total = 16
+
     for i in range(1040, 1104):
         dictionary[chr(i)] = total
         total += 1
+
     fn = (p - 1) * (q - 1)
     d = mulinv(int(e), fn)
     int_message = power(int(sw), d, n)
     print(int_message)
     int_message %= 64
+
     if int_message < 16:
         int_message += 64
     if int_message > 79:
         int_message -= 64
+
     for k, v in dictionary.items():
         if int_message == v:
             message = k
@@ -116,24 +122,31 @@ def insert_text():
     p_text.delete('1.0', END)
     q_text.delete('1.0', END)
     number = variant_text.get("1.0", 'end-1c')
+
     if not number.isdigit():
         return n_text.insert(END, "Введен некорректный символ")
     if int(number) > 75:
         return n_text.insert(END, "Такого варианта нет")
+
     doc = docx.Document('Labs_IBKS_2018_1.docx')
     text = []
     d = {}
     for paragraph in doc.paragraphs:
         text.append(paragraph.text)
-    text = '\n'.join(text)[21231:30067].strip().split('\n')
+
+    text = '\n'.join(text)
+    start_text = text.index('Вариант 1')
+    end_text = text.index('\n\n\nЛабораторная работа №3')
+    text = text[start_text:end_text].strip().split('\n')
+
     for i in range(1, len(text), 2):
         d[text[i - 1]] = text[i]
 
     for k, v in d.items():
-        result_list = []
         k = k.replace('Вариант ', '').strip()
         if number == k:
             v = v.strip().split(',')
+            result_list = []
             for i in v:
                 i = i.strip()
                 i = i.replace('n=', '')
@@ -155,12 +168,20 @@ window.configure(bg='black')
 heading = Label(window, text="factorization of the RSA key", font=("Terminal", 35), bg='black', fg='white')
 heading.pack(expand=False, fill=NONE)
 
+variant = Label(window, text="Variant:", font=("Terminal", 12), bg='black', fg='white')
+variant.place(x=10, y=10, height=80, width=80)
+variant_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
+variant_text.place(x=100, y=30, height=40, width=120)
+insert_btn = Button(window, text="Insert", font=("Arial Bold", 15), bg="black", fg="white", command=insert_text)
+insert_btn.place(x=280, y=50, anchor="center", height=30, width=100, bordermode=OUTSIDE)
+
 n_ui = Label(window, text="n:", font=("Terminal", 25), bg='black', fg='white')
 n_ui.place(x=10, y=100, height=80, width=40)
 n_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 n_text.place(x=70, y=110, height=60, width=335)
 hack_btn = Button(window, text="Hack", font=("Arial Bold", 15), bg="black", fg="white", command=test_factor_rho)
 hack_btn.place(x=235, y=200, anchor="center", height=30, width=180, bordermode=OUTSIDE)
+
 p_ui = Label(window, text="p:", font=("Terminal", 25), bg='black', fg='white')
 p_ui.place(x=10, y=240, height=80, width=40)
 p_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
@@ -169,6 +190,7 @@ q_ui = Label(window, text="q:", font=("Terminal", 25), bg='black', fg='white')
 q_ui.place(x=10, y=330, height=80, width=40)
 q_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 q_text.place(x=70, y=340, height=60, width=335)
+
 e_ui = Label(window, text="e:", font=("Terminal", 25), bg='black', fg='white')
 e_ui.place(x=500, y=100, height=80, width=40)
 e_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
@@ -179,6 +201,7 @@ sw_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', f
 sw_text.place(x=560, y=200, height=60, width=335)
 decode_btn = Button(window, text="Decode the message", font=("Arial Bold", 15), bg="black", fg="white", command=decode)
 decode_btn.place(x=725, y=290, anchor="center", height=30, width=200, bordermode=OUTSIDE)
+
 fn_ui = Label(window, text="φ(n):", font=("Arial Bold", 18), bg='black', fg='white')
 fn_ui.place(x=500, y=330, height=80, width=55)
 fn_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
@@ -194,11 +217,5 @@ result_int_text.place(x=560, y=550, height=60, width=335)
 result_alphabet_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black',
                                                  font=("Terminal", 5))
 result_alphabet_text.place(x=560, y=640, height=60, width=335)
-variant = Label(window, text="Variant:", font=("Terminal", 12), bg='black', fg='white')
-variant.place(x=10, y=10, height=80, width=80)
-variant_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
-variant_text.place(x=100, y=30, height=40, width=120)
-insert_btn = Button(window, text="Insert", font=("Arial Bold", 15), bg="black", fg="white", command=insert_text)
-insert_btn.place(x=280, y=50, anchor="center", height=30, width=100, bordermode=OUTSIDE)
 
 window.mainloop()
