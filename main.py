@@ -113,6 +113,8 @@ def insert_text():
     n_text.delete('1.0', END)
     e_text.delete('1.0', END)
     sw_text.delete('1.0', END)
+    p_text.delete('1.0', END)
+    q_text.delete('1.0', END)
     number = variant_text.get("1.0", 'end-1c')
     if not number.isdigit():
         return n_text.insert(END, "Введен некорректный символ")
