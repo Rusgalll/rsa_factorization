@@ -66,9 +66,8 @@ def test_factor_rho():
     x_1 = 150
     start_time = time.time()
     p = factor_rho(int(n), x_1)
-    execution_time = time.time() - start_time
-    print("p =", p)
     q = int(int(n) / p)
+    execution_time = time.time() - start_time
 
     p_text.insert(END, str(p))
     q_text.insert(END, str(q))
