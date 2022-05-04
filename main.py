@@ -1,5 +1,6 @@
 import math
 import time
+
 from tkinter import *
 from tkinter import scrolledtext
 import docx
@@ -182,6 +183,7 @@ window.configure(bg='black')
 heading = Label(window, text="factorization of the RSA key", font=("Terminal", 35), bg='black', fg='white')
 heading.pack(expand=False, fill=NONE)
 
+
 variant = Label(window, text="Variant:", font=("Terminal", 12), bg='black', fg='white')
 variant.place(x=10, y=10, height=80, width=80)
 variant_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
@@ -189,12 +191,14 @@ variant_text.place(x=100, y=30, height=40, width=120)
 insert_btn = Button(window, text="Insert", font=("Arial Bold", 15), bg="black", fg="white", command=insert_text)
 insert_btn.place(x=280, y=50, anchor="center", height=30, width=100, bordermode=OUTSIDE)
 
+
 n_ui = Label(window, text="n:", font=("Terminal", 25), bg='black', fg='white')
 n_ui.place(x=10, y=100, height=80, width=40)
 n_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 n_text.place(x=70, y=110, height=60, width=335)
 hack_btn = Button(window, text="Hack", font=("Arial Bold", 15), bg="black", fg="white", command=test_factor_rho)
 hack_btn.place(x=235, y=200, anchor="center", height=30, width=180, bordermode=OUTSIDE)
+
 
 p_ui = Label(window, text="p:", font=("Terminal", 25), bg='black', fg='white')
 p_ui.place(x=10, y=240, height=80, width=40)
@@ -208,6 +212,7 @@ time_po_without_threads = scrolledtext.ScrolledText(window, width=40, height=10,
                                                     font=("Terminal", 5))
 time_po_without_threads.place(x=70, y=430, height=60, width=335)
 
+
 e_ui = Label(window, text="e:", font=("Terminal", 25), bg='black', fg='white')
 e_ui.place(x=500, y=100, height=80, width=40)
 e_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
@@ -218,6 +223,7 @@ sw_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', f
 sw_text.place(x=560, y=200, height=60, width=335)
 decode_btn = Button(window, text="Decode the message", font=("Arial Bold", 15), bg="black", fg="white", command=decode)
 decode_btn.place(x=725, y=290, anchor="center", height=30, width=200, bordermode=OUTSIDE)
+
 
 fn_ui = Label(window, text="φ(n):", font=("Arial Bold", 18), bg='black', fg='white')
 fn_ui.place(x=500, y=330, height=80, width=55)
