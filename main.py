@@ -90,6 +90,7 @@ def decode():
 
     dictionary = {}
     total = 16
+    message = ''
 
     for i in range(1040, 1104):
         dictionary[chr(i)] = total
@@ -106,14 +107,6 @@ def decode():
         arr.append(str(int_message)[i - 1] + str(int_message)[i])
     print(arr)
 
-    int_message %= 64
-
-    if int_message < 16:
-        int_message += 64
-    if int_message > 79:
-        int_message -= 64
-    message = ''
-
     for i in range(len(arr)):
         for k, v in dictionary.items():
             if arr[i] == str(v):
@@ -126,7 +119,7 @@ def decode():
 
     fn_text.insert(END, str(fn))
     d_text.insert(END, str(d))
-    result_int_text.insert(END, str(arr))
+    result_int_text.insert(END, str(int_message))
     result_alphabet_text.insert(END, str(message))
 
 
@@ -136,6 +129,12 @@ def insert_text():
     sw_text.delete('1.0', END)
     p_text.delete('1.0', END)
     q_text.delete('1.0', END)
+    time_po_without_threads.delete('1.0', END)
+    fn_text.delete('1.0', END)
+    d_text.delete('1.0', END)
+    d_text.delete('1.0', END)
+    result_int_text.delete('1.0', END)
+    result_alphabet_text.delete('1.0', END)
     number = variant_text.get("1.0", 'end-1c')
 
     if not number.isdigit():
@@ -237,5 +236,3 @@ result_alphabet_text = scrolledtext.ScrolledText(window, width=40, height=10, bg
 result_alphabet_text.place(x=560, y=640, height=60, width=335)
 
 window.mainloop()
-
-
