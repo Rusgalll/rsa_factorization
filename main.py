@@ -1,6 +1,7 @@
+import math
+import time
 from tkinter import *
 from tkinter import scrolledtext
-import math
 import docx
 
 
@@ -56,17 +57,21 @@ def factor_rho(n, x_1):
 def test_factor_rho():
     p_text.delete('1.0', END)
     q_text.delete('1.0', END)
+    time_po_without_threads.delete('1.0', END)
     n = n_text.get("1.0", 'end-1c')
     if not n.isdigit() or int(n) == 1:
         return p_text.insert(END, "Введен некорректный символ")
 
     x_1 = 150
+    start_time = time.time()
     p = factor_rho(int(n), x_1)
+    execution_time = time.time() - start_time
     print("p =", p)
     q = int(int(n) / p)
 
     p_text.insert(END, str(p))
     q_text.insert(END, str(q))
+    time_po_without_threads.insert(END, f'{str(execution_time)} seconds')
 
 
 def decode():
@@ -83,7 +88,6 @@ def decode():
     if not e.isdigit() or not sw.isdigit():
         return result_alphabet_text.insert(END, "Введен некорректный символ")
 
-    message = ''
     dictionary = {}
     total = 16
 
@@ -91,27 +95,38 @@ def decode():
         dictionary[chr(i)] = total
         total += 1
 
+    print(dictionary)
+
     fn = (p - 1) * (q - 1)
     d = mulinv(int(e), fn)
     int_message = power(int(sw), d, n)
     print(int_message)
+    arr = []
+    for i in range(1, len(str(int_message)), 2):
+        arr.append(str(int_message)[i - 1] + str(int_message)[i])
+    print(arr)
+
     int_message %= 64
 
     if int_message < 16:
         int_message += 64
     if int_message > 79:
         int_message -= 64
+    message = ''
 
-    for k, v in dictionary.items():
-        if int_message == v:
-            message = k
-            break
-        else:
-            message = 'Сообщение не расшифровывается'
+    for i in range(len(arr)):
+        for k, v in dictionary.items():
+            if arr[i] == str(v):
+                print(arr[i])
+                print(str(v))
+
+                message += k
+                print(message)
+                break
 
     fn_text.insert(END, str(fn))
     d_text.insert(END, str(d))
-    result_int_text.insert(END, str(int_message))
+    result_int_text.insert(END, str(arr))
     result_alphabet_text.insert(END, str(message))
 
 
@@ -190,6 +205,9 @@ q_ui = Label(window, text="q:", font=("Terminal", 25), bg='black', fg='white')
 q_ui.place(x=10, y=330, height=80, width=40)
 q_text = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black', font=("Terminal", 5))
 q_text.place(x=70, y=340, height=60, width=335)
+time_po_without_threads = scrolledtext.ScrolledText(window, width=40, height=10, bg='#F0F8FF', fg='black',
+                                                    font=("Terminal", 5))
+time_po_without_threads.place(x=70, y=430, height=60, width=335)
 
 e_ui = Label(window, text="e:", font=("Terminal", 25), bg='black', fg='white')
 e_ui.place(x=500, y=100, height=80, width=40)
